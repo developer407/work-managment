@@ -119,7 +119,7 @@ const RegistrationForm = () => {
         </Formik>
         <Typography variant="body2" align="center" sx={{ mt: 3 }}>
           Already have an account ?{" "}
-          <Button onClick={() => navigate("/account/login")}>Login</Button>
+          <Button onClick={() => navigate("/login")}>Login</Button>
         </Typography>
       </div>
     </Container>
