@@ -21,8 +21,15 @@ const filesReducer = (state = initialState, action) => {
         loading: true,
         error: null,
       };
-    case types.CREATE_FILES_SUCCESS:
-    case types.GET_FILES_SUCCESS:
+    
+    
+      case types.CREATE_FILES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        files: [...state.files,action.payload],
+      };
+      case types.GET_FILES_SUCCESS:  
     case types.UPDATE_FILES_SUCCESS:
       return {
         ...state,

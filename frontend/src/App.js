@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import { getUser } from './State/Authentication/Action';
 import Resources from './components/Resources/Resources';
 import Archive from './components/Archive/Archive';
+import Tools from './components/Tools/Tools';
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard/>}></Route>
         <Route path='/resources' element={<Resources/>}/>
         <Route path='/archive' element={<Archive/>}/>
+        <Route path='/tool' element={<Tools/>}/>
       </Routes>
       
     </div>

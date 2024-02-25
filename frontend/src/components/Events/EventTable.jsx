@@ -8,9 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteFiles, getAllFiles } from "../../State/Files/Action";
-import { IconButton } from "@mui/material";
-import { Delete, Edit } from "@mui/icons-material";
+import { getAllEvents } from "../../State/Events/action";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -32,62 +30,42 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default function ArchiveTable() {
-  const { company, file, auth } = useSelector((store) => store);
-  const dispatch = useDispatch();
-  const jwt = localStorage.getItem("jwt");
-
-  React.useEffect(() => {
-    dispatch(getAllFiles({ jwt: auth.jwt || jwt }));
-  }, []);
-
-  const handleDeleteFile=(id)=>{
-    dispatch(deleteFiles({id,jwt}))
-  }
+export default function EventTable() {
+  const { company, file,event } = useSelector((store) => store);
+  const jwt=localStorage.getItem("jwt")
+  const dispatch=useDispatch();
+  React.useEffect(()=>{
+    dispatch(getAllEvents({jwt}))
+  },[])
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell>No</StyledTableCell>
-            <StyledTableCell align="left">Description</StyledTableCell>
             <StyledTableCell align="left">Date</StyledTableCell>
-            <StyledTableCell align="right">Name</StyledTableCell>
-            <StyledTableCell align="right">Supporter</StyledTableCell>
-            <StyledTableCell align="right">Type</StyledTableCell>
-            <StyledTableCell align="right">File</StyledTableCell>
-            <StyledTableCell align="right">Edit</StyledTableCell>
-            <StyledTableCell align="right">Delete</StyledTableCell>
+            <StyledTableCell align="left">Company</StyledTableCell>
+            <StyledTableCell align="right">Evnet</StyledTableCell>
+            <StyledTableCell align="right">Description</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {file.files.map((item) => (
+          {event.events.map((item) => (
             <StyledTableRow key={item.id}>
               <StyledTableCell>{item.id}</StyledTableCell>
-              <StyledTableCell align="left">{item.description}</StyledTableCell>
               <StyledTableCell align="left">
-                {item.createdAt.split("T")[0]}
+                {item.date}
+              </StyledTableCell>
+              <StyledTableCell align="left">
+                {item.company.name}
               </StyledTableCell>
               <StyledTableCell align="right">
-                {item.assignedWorker.fullName}
+                {item.name}
               </StyledTableCell>
               <StyledTableCell align="right">
-                {item.support.fullName}
+                {item.description}
               </StyledTableCell>
-              <StyledTableCell align="right">{item.type}</StyledTableCell>
-              <StyledTableCell align="right">
-                <a href={item.file}>{"pdf"}</a>
-              </StyledTableCell>
-              <StyledTableCell align="right">
-                <IconButton onClick={()=>handleDeleteFile(item.id)}>
-                  <Delete />
-                </IconButton>
-              </StyledTableCell>
-              <StyledTableCell align="right">
-                <IconButton>
-                  <Edit />
-                </IconButton>
-              </StyledTableCell>
+             
             </StyledTableRow>
           ))}
         </TableBody>

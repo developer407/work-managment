@@ -1,4 +1,7 @@
 import {
+  GET_EMPLOYEE_FAILURE,
+  GET_EMPLOYEE_REQUEST,
+  GET_EMPLOYEE_SUCCESS,
   GET_USER_FAILURE,
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
@@ -76,6 +79,26 @@ export const getUser = (token) => {
     } catch (error) {
       const errorMessage = error.message;
       dispatch({ type: GET_USER_FAILURE, payload: errorMessage });
+    }
+  };
+};
+
+export const getEmployees = (jwt) => {
+  return async (dispatch) => {
+    dispatch({ type: GET_EMPLOYEE_REQUEST });
+    try {
+      const response = await api.get(`/api/admin/employees`, {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
+      const users = response.data;
+
+      dispatch({ type: GET_EMPLOYEE_SUCCESS, payload: users });
+      console.log("employee list ", users);
+    } catch (error) {
+      const errorMessage = error.message;
+      dispatch({ type: GET_EMPLOYEE_FAILURE, payload: errorMessage });
     }
   };
 };

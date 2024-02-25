@@ -25,6 +25,7 @@ const companyReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         company: action.payload,
+        companies:[...state.companies,action.payload]
       };
     case types.GET_COMPANY_SUCCESS:
       return {

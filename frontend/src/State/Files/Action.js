@@ -12,11 +12,13 @@ export const createFiles =
           Authorization: `Bearer ${jwt}`,
         },
       });
+      console.log("created file ",response.data)
       dispatch({
         type: types.CREATE_FILES_SUCCESS,
         payload: response.data,
       });
     } catch (error) {
+      console.log("error",error)
       dispatch({
         type: types.CREATE_FILES_FAILURE,
         payload: error.message,

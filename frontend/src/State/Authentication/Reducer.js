@@ -10,7 +10,7 @@ import {
   GET_USER_SUCCESS,
   GET_USER_FAILURE,
   LOGOUT,
-  
+  GET_EMPLOYEE_SUCCESS,
 } from "./ActionType";
 
 const initialState = {
@@ -18,8 +18,8 @@ const initialState = {
   isLoading: false,
   error: null,
   jwt: null,
-  favorites: [],
   success: null,
+  employees: [],
 };
 
 const authReducer = (state = initialState, action) => {
@@ -27,7 +27,6 @@ const authReducer = (state = initialState, action) => {
     case REGISTER_REQUEST:
     case LOGIN_REQUEST:
     case GET_USER_REQUEST:
- 
       return { ...state, isLoading: true, error: null, success: null };
 
     case REGISTER_SUCCESS:
@@ -51,13 +50,21 @@ const authReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         user: action.payload,
-        favorites: action.payload.favorites,
       };
-   
+
+    case GET_EMPLOYEE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        employees: action.payload,
+      };
+
     case REGISTER_FAILURE:
     case LOGIN_FAILURE:
     case GET_USER_FAILURE:
-      return { ...state, isLoading: false, error: action.payload };
+      return { ...state, 
+        isLoading: false, 
+        error: action.payload };
 
     case LOGOUT:
       localStorage.removeItem("jwt");

@@ -3,6 +3,7 @@ import {thunk} from "redux-thunk";
 import authReducer from "../Authentication/Reducer";
 import companyReducer from "../Company/Reducer";
 import filesReducer from "../Files/Reducer";
+import eventsReducer from "../Events/Reducer";
 
 
 
@@ -12,6 +13,7 @@ const rootReducer=combineReducers({
     auth:authReducer,
     company:companyReducer,
     file:filesReducer,
+    event:eventsReducer,
    
 })
 
