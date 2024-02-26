@@ -21,7 +21,7 @@ const initialValues = {
   company:null
 };
 
-const EventForm = () => {
+const EventForm = ({handleClose}) => {
     const { company, file,event } = useSelector((store) => store);
     const jwt=localStorage.getItem("jwt")
     const dispatch=useDispatch();
@@ -31,6 +31,7 @@ const EventForm = () => {
     console.log(values);
     setSubmitting(false);
     dispatch(createEvent({eventData:values,jwt}))
+    handleClose()
   };
 
   useEffect(() => {

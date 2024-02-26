@@ -1,5 +1,5 @@
 // reducer.js
-import * as types from './actionTypes';
+import * as types from "./actionTypes";
 
 const initialState = {
   companies: [],
@@ -25,7 +25,7 @@ const companyReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         company: action.payload,
-        companies:[...state.companies,action.payload]
+        companies: [...state.companies, action.payload],
       };
     case types.GET_COMPANY_SUCCESS:
       return {
@@ -43,13 +43,17 @@ const companyReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        company: action.payload,
+        companies: state.companies.map((item) =>
+          action.payload.id == item.id ? action.payload : item
+        ),
       };
     case types.DELETE_COMPANY_SUCCESS:
       return {
         ...state,
         loading: false,
-        companies: state.companies.filter((company) => company.id !== action.payload),
+        companies: state.companies.filter(
+          (company) => company.id !== action.payload
+        ),
       };
     case types.CREATE_COMPANY_FAILURE:
     case types.GET_COMPANY_FAILURE:

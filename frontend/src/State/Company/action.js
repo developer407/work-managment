@@ -29,10 +29,11 @@ export const getCompanyById = ({id,jwt}) => async (dispatch) => {
   dispatch({ type: types.GET_COMPANY_REQUEST });
   try {
     const response = await api.get(`/api/companies/${id}`,{
-      headers:{
-        Authorization:`Bearer ${jwt}`
-      }
+      // headers:{
+      //   Authorization:`Bearer ${jwt}`
+      // }
     });
+    console.log("company by id",response.data)
     dispatch({
       type: types.GET_COMPANY_SUCCESS,
       payload: response.data,
@@ -47,13 +48,14 @@ export const getCompanyById = ({id,jwt}) => async (dispatch) => {
 };
 
 // Action creators for getting all companies
-export const getAllCompanies = (jwt) => async (dispatch) => {
+export const getAllCompanies = ({jwt,city}) => async (dispatch) => {
   dispatch({ type: types.GET_ALL_COMPANIES_REQUEST });
   try {
     const response = await api.get('/api/companies',{
-      headers:{
-        Authorization:`Bearer ${jwt}`
-      }
+      params:{city},
+      // headers:{
+      //   Authorization:`Bearer ${jwt}`
+      // }
     });
     console.log("companies ",response.data)
     dispatch({

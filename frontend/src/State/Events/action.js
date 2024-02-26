@@ -58,9 +58,9 @@ export const getAllEvents =
     try {
       const response = await api.get("/api/events", {
         params: { city },
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${jwt}`,
+        // },
       });
       dispatch({
         type: types.GET_ALL_EVENTS_SUCCESS,
@@ -81,9 +81,9 @@ export const getEventsByCompanyId = ({id, city,jwt}) => async (dispatch) => {
   try {
     const response = await api.get(`/api/events/company/${id}`, {
       params: { city },
-      headers:{
-        Authorization:`Bearer ${jwt}`
-    }
+    //   headers:{
+    //     Authorization:`Bearer ${jwt}`
+    // }
     });
     dispatch({
       type: types.GET_EVENTS_BY_COMPANY_ID_SUCCESS,

@@ -16,10 +16,11 @@ const Home = () => {
           alt=""
         />
       </section>
-      <section className="flex justify-center mt-20">
-        <div className="px-5 flex justify-between w-full lg:max-w-xl ">
+      <section className="flex justify-center pt-20 pb-40">
+        <div className="px-5 flex justify-between w-full lg:max-w-2xl ">
           <div onClick={() => navigate("/tool")} className="cursor-pointer">
-            <BuildIcon sx={{ fontSize: "8rem", color: "gray" }} />
+            <BuildIcon sx={{ fontSize: { xs: "4rem", lg: "6rem" }, 
+            color: "gray" }} />
             <p className="text-2xl text-center font-semibold">Tool</p>
           </div>
           <Divider orientation="vertical" variant="middle" flexItem />
@@ -27,12 +28,12 @@ const Home = () => {
             className="cursor-pointer"
             onClick={() => navigate("/resources")}
           >
-            <TravelExploreIcon sx={{ fontSize: "8rem", color: "gray" }} />
+            <TravelExploreIcon sx={{ fontSize: { xs: "4rem", lg: "6rem" }, color: "gray" }} />
             <p className="text-2xl text-center font-semibold">Resource</p>
           </div>
           <Divider orientation="vertical" variant="middle" flexItem />
           <div className="cursor-pointer" onClick={() => navigate("/archive")}>
-            <ArchiveIcon sx={{ fontSize: "8rem", color: "gray" }} />
+            <ArchiveIcon sx={{ fontSize: { xs: "4rem", lg: "6rem" }, color: "gray" }} />
             <p className="text-2xl text-center font-semibold">Archive</p>
           </div>
         </div>

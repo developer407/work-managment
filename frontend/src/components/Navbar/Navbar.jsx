@@ -22,7 +22,7 @@ const Navbar = () => {
     handleClose()
   };
   return (
-    <div className="flex lg:px-10 px-3 justify-between items-center py-2 bg-blue-500 text-white">
+    <div className="flex lg:px-10 px-3 justify-between items-center py-2 bg-[#b9c7b5] text-[#023020]">
       <div className="flex items-center gap-5">
         <span
           onClick={() => navigate("/")}
@@ -55,11 +55,11 @@ const Navbar = () => {
               aria-expanded={open ? "true" : undefined}
               onClick={handleClick}
             >
-              <div className="flex gap-2 items-center">
-                <Avatar sx={{ bgcolor: "orange" }}>
+              <div className="lg:flex gap-2 items-center">
+                <Avatar sx={{ bgcolor: "#023020" }}>
                   {auth.user?.fullName[0].toUpperCase()}
                 </Avatar>
-                <span className="text-white">{auth.user?.fullName}</span>
+                <span className="text-[#023020] lg:block hidden">{auth.user?.fullName}</span>
               </div>
             </Button>
             <Menu
@@ -75,12 +75,12 @@ const Navbar = () => {
             </Menu>
           </>
         ) : (
-          <div>
+          <Button sx={{ color: "white" }} onClick={() => navigate("/login")}>
             <PersonIcon />
-            <Button onClick={() => navigate("/login")} sx={{ color: "white" }}>
+            <span className="ml-2 hidden lg:block" >
               Login
-            </Button>
-          </div>
+            </span>
+          </Button>
         )}
       </div>
     </div>

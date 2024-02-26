@@ -1,5 +1,5 @@
 // reducer.js
-import * as types from './actionTypes';
+import * as types from "./actionTypes";
 
 const initialState = {
   events: [],
@@ -22,12 +22,25 @@ const eventsReducer = (state = initialState, action) => {
         error: null,
       };
     case types.CREATE_EVENT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        events: [...state.events, action.payload],
+      };
     case types.GET_EVENT_SUCCESS:
-    case types.UPDATE_EVENT_SUCCESS:
       return {
         ...state,
         loading: false,
         event: action.payload,
+      };
+    case types.UPDATE_EVENT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        events: state.events.map((item) =>
+          item.id == action.payload.id ? action.payload : item
+        ),
       };
     case types.GET_ALL_EVENTS_SUCCESS:
     case types.GET_EVENTS_BY_COMPANY_ID_SUCCESS:

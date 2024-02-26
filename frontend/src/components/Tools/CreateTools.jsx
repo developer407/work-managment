@@ -6,67 +6,69 @@ import { useDispatch } from "react-redux";
 import { createCompany } from "../../State/Company/action";
 import { uploadToCloudinary } from "../../Utils/UploadToCloudaniry";
 import CloseIcon from '@mui/icons-material/Close';
+import { createTool } from "../../State/Tools/action";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
-  address: Yup.string().required("Address is required"),
-  city: Yup.string().required("City is required"),
-  country: Yup.string().required("Country is required"),
+  description: Yup.string().required("Description is required"),
+  
+  logo: Yup.string().required("Logo is required"),
 });
 
 const initialValues = {
   name: "",
-  address: "",
-  city: "",
-  country: "",
+  description: "",
   logo: "",
 };
 
-const AddCompanyForm = ({handleClose}) => {
+const AddToolsForm = ({handleClose}) => {
+  const [uploadingFile, setUploadingFile] = useState(false);
   const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt");
   const [logo,setLogo]=useState("");
-  const [uploadingFile, setUploadingFile] = useState(false);
-
 
   const handleSubmit = (values, action) => {
-    values.logo=logo
-    action.setSubmitting(false)
-    console.log(action)
-    action.resetForm()
-    dispatch(createCompany({ companyData: values, jwt: jwt }));
+    
+     console.log("tool data ",values)
+    dispatch(createTool({ toolData: values, jwt: jwt }));
+   
     setLogo("")
     handleClose()
+    action.resetForm()
+    action.setSubmitting(false)
   };
 
-  const handleFileChange = async (event) => {
+  const handleFileChange = async (event,setFieldValue) => {
     setUploadingFile(true)
     const file = event.target.files[0];
     const url = await uploadToCloudinary(file, "image");
-    if(url)
-    setLogo(url)
-  setUploadingFile(false)
+    if(url){
+        setLogo(url)
+        setFieldValue("logo",url)
+    }
+    setUploadingFile(false)
+    
     // console.log("file",url)
   };
 
   return (
     <div>
       <h1 className="pb-5 font-semibold text-lg text-center">
-        Fill Company Details
+        Fill Tools Details
       </h1>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting,setFieldValue }) => (
           <Form className="space-y-3">
             <div>
               {/* <label htmlFor="name">Name</label> */}
               <Field
                 className="border 
               border-gray-500 py-2 w-full outline-none px-5 rounded-md"
-                placeholder="company name..."
+                placeholder="tool name"
                 type="text"
                 name="name"
               />
@@ -76,32 +78,14 @@ const AddCompanyForm = ({handleClose}) => {
               <Field
                 className="border 
               border-gray-500 py-2 w-full outline-none px-5 rounded-md"
-                placeholder="address..."
+                placeholder="description"
                 type="text"
-                name="address"
+                name="description"
               />
-              <ErrorMessage name="address" component="div" className="error" />
+              <ErrorMessage name="description" component="div" className="error" />
             </div>
-            <div>
-              <Field
-                className="border 
-              border-gray-500 py-2 w-full outline-none px-5 rounded-md"
-                placeholder="city..."
-                type="text"
-                name="city"
-              />
-              <ErrorMessage name="city" component="div" className="error" />
-            </div>
-            <div>
-              <Field
-                className="border 
-              border-gray-500 py-2 w-full outline-none px-5 rounded-md"
-                placeholder="country..."
-                type="text"
-                name="country"
-              />
-              <ErrorMessage name="country" component="div" className="error" />
-            </div>
+           
+            
             {!logo?<div>
               <Field
                 className="border 
@@ -109,7 +93,7 @@ const AddCompanyForm = ({handleClose}) => {
                 placeholder="logo"
                 type="file"
                 name="logo"
-                onChange={handleFileChange}
+                onChange={(e)=>handleFileChange(e,setFieldValue)}
               />
               <ErrorMessage name="logo" component="div" className="error" />
             </div>:<div className="relative pt-3 ">
@@ -138,4 +122,4 @@ const AddCompanyForm = ({handleClose}) => {
   );
 };
 
-export default AddCompanyForm;
+export default AddToolsForm;

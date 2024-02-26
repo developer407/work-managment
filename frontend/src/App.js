@@ -12,6 +12,7 @@ import { getUser } from './State/Authentication/Action';
 import Resources from './components/Resources/Resources';
 import Archive from './components/Archive/Archive';
 import Tools from './components/Tools/Tools';
+import Footer from './components/Footer/Footer';
 
 function App() {
 
@@ -26,7 +27,8 @@ function App() {
   return (
     <div>
       <Navbar/>
-      <Routes>
+      <div className='min-h-screen'>
+        <Routes>
         <Route path='/' element={<Home/>}></Route>
         <Route path="/login" element={<Auth/>}></Route>
         <Route path="/register" element={<Auth/>}></Route>
@@ -36,6 +38,9 @@ function App() {
         <Route path='/archive' element={<Archive/>}/>
         <Route path='/tool' element={<Tools/>}/>
       </Routes>
+      </div>
+      
+      <Footer/>
       
     </div>
   );

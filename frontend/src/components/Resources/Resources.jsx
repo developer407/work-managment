@@ -47,8 +47,9 @@ const Resources = () => {
     };
 
   useEffect(() => {
-    dispatch(getAllCompanies(auth.jwt || jwt));
-  }, []);
+    dispatch(getAllCompanies({jwt:auth.jwt || jwt, city:selectedCity}));
+  }, [selectedCity]);
+
   return (
     <div className="w-full flex flex-col items-center">
       <div className="w-full lg:max-w-3xl mt-10">
@@ -62,6 +63,7 @@ const Resources = () => {
               aria-haspopup="true"
               aria-expanded={openFilter ? "true" : undefined}
               onClick={handleClick}
+              sx={{color:"#023020"}}
             >
               {selectedCity || "filter by city"}
               {openFilter ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
@@ -82,9 +84,9 @@ const Resources = () => {
               ))}
             </Menu>
           </div>
-          <IconButton onClick={handleOpen}>
+          {auth.user?.role==="ROLE_ADMIN" && <IconButton onClick={handleOpen}>
             <BorderColorIcon />
-          </IconButton>
+          </IconButton>}
         </div>
         <ResourcesTable />
        

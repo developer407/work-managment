@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import {
+  Backdrop,
   Button,
+  CircularProgress,
   FormControl,
   InputLabel,
   MenuItem,
@@ -29,8 +31,8 @@ const initialValues = {
   description: "",
   assignedWorkerId: null,
   supporterId: null,
-  companyId:null,
-  file:""
+  companyId: null,
+  file: "",
 };
 
 const CreateFileForm = ({ handleClose }) => {
@@ -38,24 +40,26 @@ const CreateFileForm = ({ handleClose }) => {
   const jwt = localStorage.getItem("jwt");
   const [file, setFile] = useState("");
   const { auth, company } = useSelector((store) => store);
+  const [uploadingFile, setUploadingFile] = useState(false);
 
   const handleSubmit = (values, action) => {
-
     values.file = file;
     action.setSubmitting(false);
     console.log(action);
-dispatch(createFiles({fileData:values,jwt}))
+    dispatch(createFiles({ fileData: values, jwt }));
 
-    console.log(values)
+    console.log(values);
     action.resetForm();
     setFile("");
     handleClose();
   };
 
   const handleFileChange = async (event) => {
+    setUploadingFile(true)
     const file = event.target.files[0];
-    const data = await uploadFileToPDFco(file)
+    const data = await uploadFileToPDFco(file);
     if (data.url) setFile(data.url);
+    setUploadingFile(false)
   };
 
   useEffect(() => {
@@ -73,7 +77,7 @@ dispatch(createFiles({fileData:values,jwt}))
         // validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ isSubmitting,handleChange }) => (
+        {({ isSubmitting, handleChange }) => (
           <Form className="space-y-3">
             <div>
               <TextField
@@ -130,9 +134,7 @@ dispatch(createFiles({fileData:values,jwt}))
 
             <div>
               <FormControl fullWidth>
-                <InputLabel id="company-select-label">
-                  company
-                </InputLabel>
+                <InputLabel id="company-select-label">company</InputLabel>
                 <Select
                   labelId="company-select-label"
                   id="demo-simple-select"
@@ -153,9 +155,7 @@ dispatch(createFiles({fileData:values,jwt}))
             </div>
             <div>
               <FormControl fullWidth>
-                <InputLabel id="employee-select-label">
-                  Employee
-                </InputLabel>
+                <InputLabel id="employee-select-label">Employee</InputLabel>
                 <Select
                   labelId="employee-select-label"
                   id="demo-simple-select"
@@ -172,13 +172,15 @@ dispatch(createFiles({fileData:values,jwt}))
                   ))}
                 </Select>
               </FormControl>
-              <ErrorMessage name="assignedWorkerId" component="div" className="error" />
+              <ErrorMessage
+                name="assignedWorkerId"
+                component="div"
+                className="error"
+              />
             </div>
             <div>
               <FormControl fullWidth>
-                <InputLabel id="supporter-select-label">
-                  Supporter
-                </InputLabel>
+                <InputLabel id="supporter-select-label">Supporter</InputLabel>
                 <Select
                   labelId="suppoter-select-label"
                   id="demo-simple-select"
@@ -195,7 +197,11 @@ dispatch(createFiles({fileData:values,jwt}))
                   ))}
                 </Select>
               </FormControl>
-              <ErrorMessage name="supporterId" component="div" className="error" />
+              <ErrorMessage
+                name="supporterId"
+                component="div"
+                className="error"
+              />
             </div>
             {!file ? (
               <div>
@@ -230,6 +236,12 @@ dispatch(createFiles({fileData:values,jwt}))
           </Form>
         )}
       </Formik>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={uploadingFile}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </div>
   );
 };

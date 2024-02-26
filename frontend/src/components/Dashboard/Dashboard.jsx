@@ -11,8 +11,10 @@ const Dashboard = () => {
       <div className="w-full lg:max-w-3xl mt-10">
         <Grid className='mb-10' container spacing={2}>
        
-
-          <Grid item  xs={12} lg={12}>
+        <Grid item  xs={12} lg={6}>
+             <BarChart/>
+          </Grid>
+          <Grid item  xs={12} lg={6}>
              <PieChart/>
           </Grid>
 

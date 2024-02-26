@@ -84,9 +84,9 @@ setSelectedFileType(item.value)
               ))}
             </Menu>
           </div> */}
-          <IconButton onClick={handleOpen}>
+          {auth.user?.role==="ROLE_ADMIN" && <IconButton onClick={handleOpen}>
             <BorderColorIcon />
-          </IconButton>
+          </IconButton>}
         </div>
         <div className="w-full lg:max-w-3xl px-10 py-2 bg-blue-500 flex mb-2 justify-evenly text-white">
           {fileType.map((item)=> <p onClick={()=>handleFilterByFileType(item)} className={`cursor-pointer ${item.value===selectedFileType?"text-black font-bold":""}`}>{item.lable}</p>)}

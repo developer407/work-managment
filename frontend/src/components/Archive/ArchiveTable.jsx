@@ -9,8 +9,12 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteFiles, getAllFiles } from "../../State/Files/Action";
-import { IconButton } from "@mui/material";
+import { Box, IconButton, Modal } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import EditCompanyForm from "../Resources/EditCompany";
+import { style } from "../Resources/Resources";
+import EditFileForm from "./EditFile";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -36,6 +40,12 @@ export default function ArchiveTable() {
   const { company, file, auth } = useSelector((store) => store);
   const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt");
+  const navigate=useNavigate();
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    removeUrlParam("id")
+    setOpen(false);}
 
   React.useEffect(() => {
     dispatch(getAllFiles({ jwt: auth.jwt || jwt }));
@@ -44,7 +54,20 @@ export default function ArchiveTable() {
   const handleDeleteFile=(id)=>{
     dispatch(deleteFiles({id,jwt}))
   }
+
+  const setUrlParam = (paramName, paramValue) => {
+    navigate(`?${paramName}=${paramValue}`);
+  };
+
+  const removeUrlParam = (paramName) => {
+    navigate('');
+  };
+  const handleOpenEditForm=(id)=>{
+    setUrlParam("id",id)
+    handleOpen()
+  }
   return (
+   <>
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
@@ -56,8 +79,8 @@ export default function ArchiveTable() {
             <StyledTableCell align="right">Supporter</StyledTableCell>
             <StyledTableCell align="right">Type</StyledTableCell>
             <StyledTableCell align="right">File</StyledTableCell>
-            <StyledTableCell align="right">Edit</StyledTableCell>
-            <StyledTableCell align="right">Delete</StyledTableCell>
+           {auth.user?.role==="ROLE_ADMIN" && <StyledTableCell align="right">Edit</StyledTableCell>}
+           {auth.user?.role==="ROLE_ADMIN" && <StyledTableCell align="right">Delete</StyledTableCell>}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -78,20 +101,31 @@ export default function ArchiveTable() {
               <StyledTableCell align="right">
                 <a href={item.file}>{"pdf"}</a>
               </StyledTableCell>
-              <StyledTableCell align="right">
+             {auth.user?.role==="ROLE_ADMIN" && <StyledTableCell align="right">
                 <IconButton onClick={()=>handleDeleteFile(item.id)}>
                   <Delete />
                 </IconButton>
-              </StyledTableCell>
-              <StyledTableCell align="right">
-                <IconButton>
+              </StyledTableCell>}
+             {auth.user?.role==="ROLE_ADMIN" && <StyledTableCell align="right">
+                <IconButton onClick={()=>handleOpenEditForm(item.id)}>
                   <Edit />
                 </IconButton>
-              </StyledTableCell>
+              </StyledTableCell>}
             </StyledTableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
+    <Modal
+    open={open}
+    onClose={handleClose}
+    aria-labelledby="modal-modal-title"
+    aria-describedby="modal-modal-description"
+  >
+    <Box sx={style}>
+      <EditFileForm handleClose={handleClose}/>
+    </Box>
+  </Modal>
+   </>
   );
 }

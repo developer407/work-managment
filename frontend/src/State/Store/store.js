@@ -4,6 +4,7 @@ import authReducer from "../Authentication/Reducer";
 import companyReducer from "../Company/Reducer";
 import filesReducer from "../Files/Reducer";
 import eventsReducer from "../Events/Reducer";
+import toolReducer from "../Tools/reducer";
 
 
 
@@ -14,6 +15,7 @@ const rootReducer=combineReducers({
     company:companyReducer,
     file:filesReducer,
     event:eventsReducer,
+    tool:toolReducer,
    
 })
 

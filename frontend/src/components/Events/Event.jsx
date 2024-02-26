@@ -9,6 +9,7 @@ import CreateEvent from "./CreateEvent";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { cityList } from "./CityList";
+import { getAllEvents } from "../../State/Events/action";
 
 const Event = () => {
   const dispatch = useDispatch();
@@ -36,6 +37,10 @@ const Event = () => {
   useEffect(() => {
     dispatch(getAllFiles({ jwt: auth.jwt || jwt }));
   }, []);
+
+  React.useEffect(() => {
+    dispatch(getAllEvents({ jwt ,city:selectedCity}));
+  }, [selectedCity]);
 
   
 
@@ -72,9 +77,9 @@ const Event = () => {
             </Menu>
           </div>
 
-          <IconButton onClick={handleOpen}>
+          {auth.user?.role==="ROLE_ADMIN" && <IconButton onClick={handleOpen}>
             <BorderColorIcon />
-          </IconButton>
+          </IconButton>}
         </div>
         <EventTable />
 

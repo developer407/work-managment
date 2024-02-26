@@ -57,9 +57,9 @@ export const getAllFiles =
     try {
       const response = await api.get("/api/files", {
         params: { type },
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${jwt}`,
+        // },
       });
       dispatch({
         type: types.GET_ALL_FILES_SUCCESS,
@@ -130,9 +130,9 @@ export const findFilesByCompanyId =
     dispatch({ type: types.FIND_FILES_BY_COMPANY_ID_REQUEST });
     try {
       const response = await api.get(`/api/files/company/${companyId}`, {
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${jwt}`,
+        // },
       });
       dispatch({
         type: types.FIND_FILES_BY_COMPANY_ID_SUCCESS,
