@@ -18,7 +18,7 @@ export const style = {
   width: 400,
   bgcolor: "background.paper",
   border: "none",
-  outline:"none",
+  outline: "none",
   boxShadow: 24,
   p: 4,
 };
@@ -32,30 +32,34 @@ const Resources = () => {
   const handleClose = () => setOpen(false);
 
   const [selectedCity, setSelectedCity] = useState("");
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const openFilter = Boolean(anchorEl);
-    const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
-    };
-    const handleCloseFilter = () => {
-      setAnchorEl(null);
-    };
-  
-    const handleChangeCity = (item) => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const openFilter = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleCloseFilter = () => {
+    setAnchorEl(null);
+  };
+
+  const handleChangeCity = (item) => {
+    if (item === "All") {
+      setSelectedCity(null);
+    } else {
       setSelectedCity(item);
-      handleCloseFilter();
-    };
+    }
+    handleCloseFilter();
+  };
 
   useEffect(() => {
-    dispatch(getAllCompanies({jwt:auth.jwt || jwt, city:selectedCity}));
+    dispatch(getAllCompanies({ jwt: auth.jwt || jwt, city: selectedCity }));
+    console.log("selected city",selectedCity)
   }, [selectedCity]);
 
   return (
     <div className="w-full flex flex-col items-center">
       <div className="w-full lg:max-w-3xl mt-10">
-      <p className="font-bold text-4xl pb-5">Resources</p>
+        <p className="font-bold text-4xl pb-5">Resources</p>
         <div className="w-full pb-5 flex justify-between">
-          
           <div className="flex gap-4 items-center">
             <Button
               id="basic-button"
@@ -63,7 +67,7 @@ const Resources = () => {
               aria-haspopup="true"
               aria-expanded={openFilter ? "true" : undefined}
               onClick={handleClick}
-              sx={{color:"#023020"}}
+              sx={{ color: "#023020" }}
             >
               {selectedCity || "filter by city"}
               {openFilter ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
@@ -84,12 +88,15 @@ const Resources = () => {
               ))}
             </Menu>
           </div>
-          {auth.user?.role==="ROLE_ADMIN" && <IconButton onClick={handleOpen}>
-            <BorderColorIcon />
-          </IconButton>}
+          {(auth.user?.role === "ROLE_ADMIN"||
+                  auth.user?.role === "ROLE_SUPER_ADMIN") && (
+            <IconButton onClick={handleOpen}>
+              <BorderColorIcon />
+            </IconButton>
+          )}
         </div>
         <ResourcesTable />
-       
+
         <Modal
           open={open}
           onClose={handleClose}
@@ -97,7 +104,7 @@ const Resources = () => {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <AddCompanyForm handleClose={handleClose}/>
+            <AddCompanyForm handleClose={handleClose} />
           </Box>
         </Modal>
       </div>

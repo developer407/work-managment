@@ -75,10 +75,12 @@ export default function EventTable() {
               <StyledTableCell align="left">Company</StyledTableCell>
               <StyledTableCell align="right">Evnet</StyledTableCell>
               <StyledTableCell align="right">Description</StyledTableCell>
-              {auth.user?.role === "ROLE_ADMIN" && (
+              {(auth.user?.role === "ROLE_ADMIN"||
+                  auth.user?.role === "ROLE_SUPER_ADMIN") && (
                 <StyledTableCell align="right">Edit</StyledTableCell>
               )}
-              {auth.user?.role === "ROLE_ADMIN" && (
+              {(auth.user?.role === "ROLE_ADMIN"||
+                  auth.user?.role === "ROLE_SUPER_ADMIN") && (
                 <StyledTableCell align="right">Delete</StyledTableCell>
               )}
             </TableRow>
@@ -96,14 +98,16 @@ export default function EventTable() {
                   {item.description}
                 </StyledTableCell>
 
-                {auth.user?.role === "ROLE_ADMIN" && (
+                {(auth.user?.role === "ROLE_ADMIN"||
+                  auth.user?.role === "ROLE_SUPER_ADMIN") && (
                   <StyledTableCell align="right">
                     <IconButton onClick={() => handleOpenEditForm(item.id)}>
                       <Edit />
                     </IconButton>
                   </StyledTableCell>
                 )}
-                {auth.user?.role === "ROLE_ADMIN" && (
+                {(auth.user?.role === "ROLE_ADMIN" ||
+                  auth.user?.role === "ROLE_SUPER_ADMIN") && (
                   <StyledTableCell align="right">
                     <IconButton onClick={() => handleDeleteEvent(item.id)}>
                       <Delete />

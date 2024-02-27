@@ -20,7 +20,9 @@ const Home = () => {
         <div className="px-5 flex justify-between w-full lg:max-w-2xl ">
           <div onClick={() => navigate("/tool")} className="cursor-pointer">
             <BuildIcon sx={{ fontSize: { xs: "4rem", lg: "6rem" }, 
-            color: "gray" }} />
+            color: "gray",":hover": {
+              color: "#b9c7b5"
+            } }} />
             <p className="text-2xl text-center font-semibold">Tool</p>
           </div>
           <Divider orientation="vertical" variant="middle" flexItem />
@@ -28,12 +30,16 @@ const Home = () => {
             className="cursor-pointer"
             onClick={() => navigate("/resources")}
           >
-            <TravelExploreIcon sx={{ fontSize: { xs: "4rem", lg: "6rem" }, color: "gray" }} />
+            <TravelExploreIcon sx={{":hover": {
+              color: "#b9c7b5"
+            }, fontSize: { xs: "4rem", lg: "6rem" }, color: "gray" }} />
             <p className="text-2xl text-center font-semibold">Resource</p>
           </div>
           <Divider orientation="vertical" variant="middle" flexItem />
           <div className="cursor-pointer" onClick={() => navigate("/archive")}>
-            <ArchiveIcon sx={{ fontSize: { xs: "4rem", lg: "6rem" }, color: "gray" }} />
+            <ArchiveIcon sx={{":hover": {
+              color: "#b9c7b5"
+            }, fontSize: { xs: "4rem", lg: "6rem" }, color: "gray" }} />
             <p className="text-2xl text-center font-semibold">Archive</p>
           </div>
         </div>

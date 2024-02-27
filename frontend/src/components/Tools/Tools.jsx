@@ -56,7 +56,8 @@ setSelectedFileType(item.value)
         <p className="font-bold text-2xl pb-5">Tools</p>
 
           
-          {auth.user?.role==="ROLE_ADMIN" && <IconButton onClick={handleOpen}>
+          {(auth.user?.role==="ROLE_ADMIN"||
+                  auth.user?.role === "ROLE_SUPER_ADMIN") && <IconButton onClick={handleOpen}>
             <BorderColorIcon />
           </IconButton>}
         </div>

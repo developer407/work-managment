@@ -19,7 +19,7 @@ const Navbar = () => {
   };
   const handleLogout = () => {
     dispatch(logout());
-    handleClose()
+    handleClose();
   };
   return (
     <div className="flex lg:px-10 px-3 justify-between items-center py-2 bg-[#b9c7b5] text-[#023020]">
@@ -36,12 +36,15 @@ const Navbar = () => {
         >
           Upcoming Events
         </span>
-        <span
-          onClick={() => navigate("/dashboard")}
-          className="cursor-pointer hover:text-gray-300"
-        >
-          Dashboard
-        </span>
+        {(auth.user?.role === "ROLE_ADMIN" ||
+          auth.user?.role === "ROLE_SUPER_ADMIN") && (
+          <span
+            onClick={() => navigate("/dashboard")}
+            className="cursor-pointer hover:text-gray-300"
+          >
+            Dashboard
+          </span>
+        )}
       </div>
 
       <div>
@@ -59,7 +62,9 @@ const Navbar = () => {
                 <Avatar sx={{ bgcolor: "#023020" }}>
                   {auth.user?.fullName[0].toUpperCase()}
                 </Avatar>
-                <span className="text-[#023020] lg:block hidden">{auth.user?.fullName}</span>
+                <span className="text-[#023020] lg:block hidden">
+                  {auth.user?.fullName}
+                </span>
               </div>
             </Button>
             <Menu
@@ -77,9 +82,7 @@ const Navbar = () => {
         ) : (
           <Button sx={{ color: "white" }} onClick={() => navigate("/login")}>
             <PersonIcon />
-            <span className="ml-2 hidden lg:block" >
-              Login
-            </span>
+            <span className="ml-2 hidden lg:block">Login</span>
           </Button>
         )}
       </div>

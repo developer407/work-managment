@@ -81,7 +81,8 @@ export default function ToolsTable() {
               <StyledTableCell align="left">Name</StyledTableCell>
               <StyledTableCell align="right">Description</StyledTableCell>
               {/* {auth.user?.role==="ROLE_ADMIN" && <StyledTableCell align="right">Edit</StyledTableCell>} */}
-              {auth.user?.role === "ROLE_ADMIN" && (
+              {(auth.user?.role === "ROLE_ADMIN"||
+                  auth.user?.role === "ROLE_SUPER_ADMIN") && (
                 <StyledTableCell align="right">Delete</StyledTableCell>
               )}
             </TableRow>
@@ -106,7 +107,8 @@ export default function ToolsTable() {
                   <Edit />
                 </IconButton>
               </StyledTableCell>} */}
-                {auth.user?.role === "ROLE_ADMIN" && (
+                {(auth.user?.role === "ROLE_ADMIN"||
+                  auth.user?.role === "ROLE_SUPER_ADMIN") && (
                   <StyledTableCell align="right">
                     <IconButton onClick={() => handleDeleteTool(item.id)}>
                       <Delete />

@@ -30,7 +30,11 @@ const Event = () => {
   };
 
   const handleChangeCity = (item) => {
-    setSelectedCity(item);
+    if (item === "All") {
+      setSelectedCity(null);
+    } else {
+      setSelectedCity(item);
+    }
     handleCloseFilter();
   };
 
@@ -77,7 +81,8 @@ const Event = () => {
             </Menu>
           </div>
 
-          {auth.user?.role==="ROLE_ADMIN" && <IconButton onClick={handleOpen}>
+          {(auth.user?.role==="ROLE_ADMIN"||
+                  auth.user?.role === "ROLE_SUPER_ADMIN") && <IconButton onClick={handleOpen}>
             <BorderColorIcon />
           </IconButton>}
         </div>
@@ -90,7 +95,7 @@ const Event = () => {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <CreateEvent handleClose={handleClose} />
+            <CreateEvent setSelectedCity={setSelectedCity} handleClose={handleClose} />
           </Box>
         </Modal>
       </div>

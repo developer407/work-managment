@@ -5,6 +5,7 @@ import companyReducer from "../Company/Reducer";
 import filesReducer from "../Files/Reducer";
 import eventsReducer from "../Events/Reducer";
 import toolReducer from "../Tools/reducer";
+import superAdminReducer from "../SuperAdmin/reducer";
 
 
 
@@ -16,6 +17,7 @@ const rootReducer=combineReducers({
     file:filesReducer,
     event:eventsReducer,
     tool:toolReducer,
+    superAdmin:superAdminReducer
    
 })
 

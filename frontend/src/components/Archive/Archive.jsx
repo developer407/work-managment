@@ -57,39 +57,14 @@ setSelectedFileType(item.value)
         <div className="w-full pb-5 flex justify-between items-center">
         <p className="font-bold text-2xl pb-5">Archive</p>
 
-          {/* <div className="flex gap-4 items-center">
-            <Button
-              id="basic-button"
-              aria-controls={openFilter ? "basic-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={openFilter ? "true" : undefined}
-              onClick={handleClick}
-            >
-              {selectedCity || "filter by city"}
-              {openFilter ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
-            </Button>
-            <Menu
-              id="basic-menu"
-              anchorEl={anchorEl}
-              open={openFilter}
-              onClose={handleCloseFilter}
-              MenuListProps={{
-                "aria-labelledby": "basic-button",
-              }}
-            >
-              {cityList.map((item) => (
-                <MenuItem onClick={() => handleChangeCity(item)}>
-                  {item}
-                </MenuItem>
-              ))}
-            </Menu>
-          </div> */}
-          {auth.user?.role==="ROLE_ADMIN" && <IconButton onClick={handleOpen}>
+       
+          {(auth.user?.role==="ROLE_ADMIN"||
+                  auth.user?.role === "ROLE_SUPER_ADMIN") && <IconButton onClick={handleOpen}>
             <BorderColorIcon />
           </IconButton>}
         </div>
-        <div className="w-full lg:max-w-3xl px-10 py-2 bg-blue-500 flex mb-2 justify-evenly text-white">
-          {fileType.map((item)=> <p onClick={()=>handleFilterByFileType(item)} className={`cursor-pointer ${item.value===selectedFileType?"text-black font-bold":""}`}>{item.lable}</p>)}
+        <div className="w-full lg:max-w-3xl px-10 py-2 bg-[#023020] flex mb-2 justify-evenly text-white">
+          {fileType.map((item)=> <p onClick={()=>handleFilterByFileType(item)} className={`cursor-pointer ${item.value===selectedFileType?"text-[gray] font-bold":""}`}>{item.lable}</p>)}
       
         </div>
         <ArchiveTable />

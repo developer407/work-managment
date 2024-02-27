@@ -1,10 +1,15 @@
 import React from 'react'
 import ArchiveTable from '../Archive/ArchiveTable'
 import PieChart from './PieChart'
-import { Grid } from '@mui/material'
+import { Divider, Grid, IconButton } from '@mui/material'
 import BarChart from './BarChart'
+import AdminTable from '../SuperAdmin/AdminTable'
+import { Create } from '@mui/icons-material'
+import Admin from '../SuperAdmin/Admin'
+import { useSelector } from 'react-redux'
 
 const Dashboard = () => {
+  const {auth}=useSelector(store=>store)
   
   return (
     <div className="w-full flex flex-col items-center">
@@ -21,6 +26,10 @@ const Dashboard = () => {
         </Grid>
        
       <ArchiveTable/>
+      
+     {auth.user.role==="ROLE_SUPER_ADMIN" && <div className='my-10'>
+        <Admin/>
+      </div>}
       </div>
     </div>
   )
