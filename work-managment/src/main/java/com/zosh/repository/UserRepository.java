@@ -1,5 +1,6 @@
 package com.zosh.repository;
 
+import com.zosh.domain.USER_ROLE;
 import com.zosh.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,5 +11,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	
 	public User findByEmail(String username);
+
+	public List<User> findByRole(USER_ROLE role);
 
 }

@@ -34,7 +34,7 @@ public class FilesController {
         User assignedWorker=userService.findUserById(req.getAssignedWorkerId());
         Company company=companyService.getCompanyById(req.getCompanyId());
 
-        Files savedFiles = filesService.saveFiles(req.getName(),
+        Files savedFiles = filesService.saveFiles(req.getName(),req.getDescription(),req.getFile(),
                 req.getType(),supporter,assignedWorker,company);
         return new ResponseEntity<>(savedFiles, HttpStatus.CREATED);
     }
@@ -52,7 +52,7 @@ public class FilesController {
     }
 
     @PutMapping("/admin/files/{id}")
-    public ResponseEntity<Files> updateFiles(@PathVariable Long id, @RequestBody Files files) throws Exception {
+    public ResponseEntity<Files> updateFiles(@PathVariable Long id, @RequestBody FileRequest files) throws Exception {
         Files updatedFiles = filesService.updateFiles(id, files);
         return ResponseEntity.ok(updatedFiles);
     }

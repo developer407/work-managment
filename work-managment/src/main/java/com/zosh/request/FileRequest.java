@@ -20,4 +20,7 @@ public class FileRequest {
 
     private TYPE type;
 
+    private String description;
+    private String file;
+
 }

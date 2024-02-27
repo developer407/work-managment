@@ -1,18 +1,15 @@
 package com.zosh.model;
 
-import com.zosh.domain.TYPE;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Files {
+public class Tools {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,23 +17,8 @@ public class Files {
 
     private String name;
 
-    @ManyToOne
-    private Company company;
-
-    @ManyToOne
-    private User assignedWorker;
-
-    @ManyToOne
-    private User support;
-
-    private TYPE type;
-
-    private LocalDateTime createdAt;
-
     private String description;
 
-    @Column(length = 5000)
-    private String file;
-
-
+    @Column(length = 1000)
+    private String logo;
 }

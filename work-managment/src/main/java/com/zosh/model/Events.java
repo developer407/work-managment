@@ -1,6 +1,5 @@
 package com.zosh.model;
 
-import com.zosh.domain.TYPE;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +11,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Files {
+public class Events {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,20 +22,9 @@ public class Files {
     @ManyToOne
     private Company company;
 
-    @ManyToOne
-    private User assignedWorker;
-
-    @ManyToOne
-    private User support;
-
-    private TYPE type;
-
-    private LocalDateTime createdAt;
+    private String date;
 
     private String description;
 
-    @Column(length = 5000)
-    private String file;
-
-
+    private String city;
 }

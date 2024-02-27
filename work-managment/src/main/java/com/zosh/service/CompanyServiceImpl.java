@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
@@ -25,8 +26,21 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public List<Company> getAllCompanies() {
-        return companyRepository.findAll();
+    public List<Company> getAllCompanies(String city) {
+List<Company> companies=companyRepository.findAll();
+if(city!=null){
+    companies=companies.stream()
+            .filter(company -> company.getAddress() != null && containsAddressKeyword(
+                    company.getAddress(), city))
+            .collect(Collectors.toList());
+}
+
+        return companies;
+    }
+
+    private boolean containsAddressKeyword(String address, String keyword) {
+        // Check if the address contains the keyword (case-insensitive)
+        return address != null && address.toLowerCase().contains(keyword.toLowerCase());
     }
 
     @Override

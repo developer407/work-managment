@@ -9,10 +9,15 @@ import com.zosh.request.FileRequest;
 import java.util.List;
 
 public interface FileService {
-    Files saveFiles(String name, TYPE type, User supporter, User assignedWorker, Company company);
+    Files saveFiles(String name,
+                    String description,
+                    String file,
+                    TYPE type,
+                    User supporter,
+                    User assignedWorker, Company company);
     Files getFilesById(Long id) throws Exception;
     List<Files> getAllFiles(TYPE type);
-    Files updateFiles(Long id, Files files) throws Exception;
+    Files updateFiles(Long id, FileRequest files) throws Exception;
     void deleteFiles(Long id);
     List<Files> findFilesByCompanyId(Long companyId);
 

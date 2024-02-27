@@ -20,9 +20,18 @@ public class FilesServiceImpl implements FileService {
     @Autowired
     private FileRepository filesRepository;
 
+    @Autowired
+    private CompanyService companyService;
+
+    @Autowired
+    private UserService userService;
+
 
     @Override
-    public Files saveFiles(String name, TYPE type,
+    public Files saveFiles(String name,
+                           String description,
+                           String file,
+                           TYPE type,
                            User supporter,
                            User assignedWorker,
                            Company company) {
@@ -33,6 +42,8 @@ public class FilesServiceImpl implements FileService {
         files.setCompany(company);
         files.setAssignedWorker(assignedWorker);
         files.setCreatedAt(LocalDateTime.now());
+        files.setDescription(description);
+        files.setFile(file);
         return filesRepository.save(files);
     }
 
@@ -54,14 +65,31 @@ public class FilesServiceImpl implements FileService {
     }
 
     @Override
-    public Files updateFiles(Long id, Files files) throws Exception {
+    public Files updateFiles(Long id, FileRequest files) throws Exception {
         Files existingFiles = getFilesById(id);
-        existingFiles.setName(files.getName());
-        existingFiles.setCompany(files.getCompany());
-        existingFiles.setAssignedWorker(files.getAssignedWorker());
-        existingFiles.setSupport(files.getSupport());
+
+        if(files.getFile()!=null){
+            existingFiles.setFile(files.getFile());
+        }
+        if(files.getName()!=null){
+            existingFiles.setName(files.getName());
+        }
+        if(files.getCompanyId()!=null){
+            Company company=companyService.getCompanyById(files.getCompanyId());
+            existingFiles.setCompany(company);
+        }
+        if(files.getAssignedWorkerId()!=null){
+            User user=userService.findUserById(files.getAssignedWorkerId());
+            existingFiles.setAssignedWorker(user);
+        }
+
+        if(files.getSupporterId()!=null){
+            User user=userService.findUserById(files.getSupporterId());
+             existingFiles.setSupport(user);
+        }
+
         existingFiles.setType(files.getType());
-        existingFiles.setCreatedAt(files.getCreatedAt());
+//        existingFiles.setCreatedAt(files.getCreatedAt());
         return filesRepository.save(existingFiles);
     }
 

@@ -2,6 +2,7 @@ package com.zosh.service;
 
 import com.zosh.config.JwtProvider;
 
+import com.zosh.domain.USER_ROLE;
 import com.zosh.model.User;
 
 import com.zosh.repository.UserRepository;
@@ -59,6 +60,33 @@ public class UserServiceImplementation implements UserService {
 			throw new Exception("user not found...");
 		}
 		return optionalUser.get();
+	}
+
+	@Override
+	public List<User> getAllEmployee() {
+
+		return userRepository.findByRole(USER_ROLE.ROLE_EMPLOYEE);
+	}
+
+	@Override
+	public User createAdmin(User user) {
+		User createdUser=new User();
+		createdUser.setRole(USER_ROLE.ROLE_ADMIN);
+		createdUser.setFullName(user.getFullName());
+		createdUser.setEmail(user.getEmail());
+		createdUser.setPassword(passwordEncoder.encode(user.getPassword()));
+		return userRepository.save(createdUser);
+	}
+
+	@Override
+	public List<User> getAllAdmin() {
+		return userRepository.findByRole(USER_ROLE.ROLE_ADMIN);
+	}
+
+	@Override
+	public void deleteUser(Long userId) throws Exception {
+		User user = findUserById(userId);
+		userRepository.delete(user);
 	}
 
 

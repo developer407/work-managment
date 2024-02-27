@@ -14,6 +14,14 @@ public interface UserService {
 
 	public User findUserById(Long userId) throws Exception;
 
+	public List<User> getAllEmployee();
+
+	public User createAdmin(User user);
+
+	public List<User> getAllAdmin();
+
+	public  void deleteUser(Long userId) throws Exception;
+
 
 
 

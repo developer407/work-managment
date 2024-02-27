@@ -29,10 +29,12 @@ public class CompanyController {
     }
 
     @GetMapping("/companies")
-    public ResponseEntity<List<Company>> getAllCompanies() {
-        List<Company> companies = companyService.getAllCompanies();
+    public ResponseEntity<List<Company>> getAllCompanies(@RequestParam(required = false) String city) {
+        List<Company> companies = companyService.getAllCompanies(city);
         return ResponseEntity.ok(companies);
     }
+
+
 
     @PutMapping("/admin/companies/{id}")
     public ResponseEntity<Company> updateCompany(@PathVariable Long id, @RequestBody Company company) throws Exception {
